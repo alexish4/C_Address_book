@@ -97,11 +97,14 @@ Status menu(AddressBook *address_book)
 
 		option = get_option(NUM, "");
 
-		if ((address_book-> count == 0) && (option != e_add_contact))
+
+		if(option == e_exit) 
+			break;
+		else if ((address_book-> count == 0) && (option != e_add_contact))
 		{
 			get_option(NONE, "No entries found!!. Would you like to add? Use Add Contacts");
 
-			continue;
+			//continue;
 		}
 
 		switch (option)
