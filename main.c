@@ -30,6 +30,6 @@ int main(void)
 		}
 	}
 
-
+	free(address_book.list);
 	return 0;
 }
