@@ -153,6 +153,41 @@ Status search_contact(AddressBook *address_book)
 Status edit_contact(AddressBook *address_book)
 {
 	/* Add the functionality for edit contacts here */
+	//Have to find out some way to be able to search the contact first
+	int editInput;
+	while(editInput != 0) //looping so that user can keep editing many times using the menu
+	{
+		printf("0. Exit\n");
+		printf("1. Edit by name\n");
+		printf("2. Edit by phone number\n");
+		printf("3. Edit by email\n");
+		printf("\n");
+		printf("Please select an option: ");
+		scanf("%d", editInput);
+		
+		if(editInput == 1) //by name
+		{	
+			printf("Current name is %s\n", address_book -> list[address_book -> count].name);
+			printf("Please enter new name: ");
+			scanf("%s", address_book -> list[address_book -> count].name);
+			printf("\n");
+		}
+		else if(editInput == 2)//by phone number
+		{	
+			printf("Current phone number is %s\n", address_book -> list[address_book -> count].phone_numbers);
+			printf("Please enter new phone number: ");
+			scanf("%s", address_book -> list[address_book -> count].phone_numbers);
+			printf("\n");
+		}
+		else if(editInput == 3) //by email
+		{	
+			printf("Current email address is %s\n", address_book -> list[address_book -> count].email_addresses);
+			printf("Please enter new email address: ");
+			scanf("%s", address_book -> list[address_book -> count].email_addresses);
+			printf("\n");
+		}
+	}
+	return e_success; //I think this allows the information to be saved
 }
 
 Status delete_contact(AddressBook *address_book)
