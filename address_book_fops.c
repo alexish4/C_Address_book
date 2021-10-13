@@ -18,7 +18,6 @@ Status load_file(AddressBook *address_book)
 			strcpy(address_book->list[i].phone_numbers[j],"[empty]");
 			strcpy(address_book->list[i].email_addresses[j],"[empty]");
 		}
-		
 	}
 	
 	//Check for file existance, if the file exists, return 0
@@ -39,20 +38,6 @@ Status load_file(AddressBook *address_book)
 			//Initialization
 			int row = 0, col = 0;
 			char buffer[225];
-
-			//Check number of people in the file
-			/*
-			while(!feof(address_book->fp)) {
-				char token = fgetc(address_book->fp);
-				if(token == '\n')
-					lines++;
-			}*/
-
-			//Create an array of ContactInfo to store data from cvs file
-			//address_book->list = malloc((lines)*sizeof(ContactInfo));
-
-			//address_book->count = lines;
-
 
 			while(fgets(buffer,225,address_book->fp)) {
 				col = 1;
