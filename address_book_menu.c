@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdbool.h>
 
 //#include "abk_fileops.h"
 //#include "abk_log.h"
@@ -158,4 +159,54 @@ Status edit_contact(AddressBook *address_book)
 Status delete_contact(AddressBook *address_book)
 {
 	/* Add the functionality for delete contacts here */
+}
+
+void displayList(AddressBook *address_book) {
+	printf("=================================================================================================================\n");
+	printf("%c %-10s %c %-30s %c %-30s %c %-30s %c\n",':',"S.No",':', "Name", ':', "Phone No", ':', "Email ID",':');
+	printf("=================================================================================================================\n");
+	for(int j = 0; j < address_book->count;j++) {
+		printf("%c %-10d %c %-30s %c %-30s %c %-30s %c\n",':',address_book->list[j].si_no,':', address_book->list[j].name[0], ':', address_book->list[j].phone_numbers[0], ':', address_book->list[j].email_addresses[0], ':');
+		for(int i = 1; i < PHONE_NUMBER_COUNT; i++) {
+			printf("%c %-10s %c %-30s %c %-30s %c %-30s %c\n",':',"",':', "", ':', ((strcmp(address_book->list[j].phone_numbers[i],"[empty]") == 0) ? "" : address_book->list[j].phone_numbers[i]), ':', ((strcmp(address_book->list[j].email_addresses[i],"[empty]") == 0) ? "" : address_book->list[j].email_addresses[i]),':');
+		}
+		printf("=================================================================================================================\n");
+	}
+}
+
+int checkIntChar() {
+    int number = 0, buffer = 0;
+
+    while(true) {
+        if((scanf("%d", &number)) != 1) {
+            printf("Invalid input!\n");
+            while((number = getchar()) != EOF && number != '\n');
+        }
+        else if(number < 0) {
+            printf("Invalid input!\n");
+            //clear buffer
+            while((number = getchar()) != EOF && number != '\n');
+        }
+        else {
+            break;
+        }
+    }
+    //clear buffer
+    while((buffer = getchar()) != EOF && buffer != '\n');
+    return number;
+}
+
+bool checkChar() {
+    int number = 0;
+
+    //Clear the buffer if the inputs are wrong
+    while(true) {
+        number = getchar();
+        if(number == 'y' || number == 'Y') {
+            return true;
+        }
+        else if(number == 'n' || number == 'N') {
+            return false;
+        }
+    }
 }
