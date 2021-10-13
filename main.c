@@ -13,6 +13,8 @@ int main(void)
 	AddressBook address_book;
 	Status ret;
 
+	address_book.list = malloc((1000)*sizeof(ContactInfo));
+
 	/* Load the file from .csv file if any */
 	ret = load_file(&address_book);
 
