@@ -158,4 +158,57 @@ Status edit_contact(AddressBook *address_book)
 Status delete_contact(AddressBook *address_book)
 {
 	/* Add the functionality for delete contacts here */
+	int option, siNum;
+	int bookSize = address_book->count*sizeof(ContactInfo);
+	char user_input[32];
+	ContactInfo *matchingPtr = address_book->list;
+	char* test;
+
+	do {
+		printf("#######\tAddress Book\t#######\n");
+		printf("#######\tSearch Contact to Delete by: \n\n");
+		printf("0. Back\n");
+		printf("1. Name\n");
+		printf("2. Phone Number\n");
+		printf("3. Email ID\n");
+		printf("4. Serial Number\n\n");
+		printf("Please select an option: ");
+
+		option = get_option(NUM, "");
+
+		switch(option){
+			case e_first_opt:
+				printf("Exiting Delete Contact menu.");
+				return e_back;
+			case e_second_opt:
+				get_string("Enter the Name: ", user_input);
+				//matchingPtr = searchName();
+				break;
+			case e_third_opt:
+				get_string("Enter the Phone Number: ", user_input);
+				test = strtok(user_input, '\0');
+				//matchingPtr = searchPhoneNumber();
+				break;
+			case e_fourth_opt:
+				get_string("Enter the Email Address: ", user_input);
+				//matchingPtr = searchEmail();
+				break;
+			case e_fifth_opt:
+				siNum = get_option(NUM, "Enter Serial Number: ");
+				//matchingPtr = searchSiNum();
+				break;
+			case e_no_opt:
+				break;
+
+		}
+
+		if(matchingPtr != NULL){
+			printf("Success");
+		} else{
+			printf("Fail");
+		}
+
+	} while(option != e_no_opt);
+	
+	return e_success;
 }
