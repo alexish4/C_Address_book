@@ -1,4 +1,4 @@
-//gcc address_book_fops.h address_book_fops.c address_book_menu.h address_book_menu.c address_book.h main.c
+//gcc address_book_fops.h address_book_fops.c address_book_menu.h address_book_menu.c address_book.h main.c -o a
 #include <stdio.h>
 //#include <stdio_ext.h>
 #include <stdlib.h>
