@@ -19,8 +19,35 @@ int get_option(int type, const char *msg)
 	 * Read an number
 	 * Read a charcter
 	 */ 
+	int number = 0;
 
-	/* Fill the code to add above functionality */
+	if(*msg != '\0')
+		printf("%s", msg);
+
+	if(type == NUM) {
+		number = checkIntChar();
+
+		switch(number) {
+			case 0: return e_exit;
+			case 1: return e_add_contact;
+			case 2: return e_search_contact;
+			case 3: return e_edit_contact;
+			case 4: return e_delete_contact;
+			case 5: return e_list_contacts;
+			case 6: return e_save;
+			default: return e_exit;
+		}
+	}
+	else if (type == CHAR) {
+		bool check = checkChar();
+		if(check == false)
+			return 'N';
+		else 
+			return 'Y';
+	}
+	else {
+		return e_back;
+	}
 }
 
 Status save_prompt(AddressBook *address_book)
@@ -29,7 +56,7 @@ Status save_prompt(AddressBook *address_book)
 
 	do
 	{
-		main_menu();
+		//main_menu();
 
 		option = get_option(CHAR, "\rEnter 'N' to Ignore and 'Y' to Save: ");
 
