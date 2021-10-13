@@ -2,6 +2,7 @@
 #define ADDRESS_BOOK_H
 
 #include <stdio.h>
+#include <stdbool.h>
 
 #define DEFAULT_FILE				"address_book.csv"
 
