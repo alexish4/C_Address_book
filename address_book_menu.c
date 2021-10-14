@@ -69,7 +69,7 @@ Status save_prompt(AddressBook *address_book)
 		}
 	} while (option != 'N');
 
-	free(address_book->list);
+	//free(address_book->list);
 
 	return e_success;
 }
@@ -87,9 +87,9 @@ Status list_contacts(AddressBook *address_book, const char *title, int *index, c
 
 void menu_header(const char *str)
 {
-	fflush(stdout);
+	//fflush(stdout);
 
-	system("clear");
+	//system("clear");
 
 	printf("#######  Address Book  #######\n");
 	if (*str != '\0')
@@ -171,12 +171,12 @@ Status add_contacts(AddressBook *address_book)
 
 Status search(const char *str, AddressBook *address_book, int loop_count, int field, const char *msg, Modes mode)
 {
-	/* Add the functionality for adding contacts here */
+	
 }
 
 Status search_contact(AddressBook *address_book)
 {
-	/* Add the functionality for search contacts here */
+
 }
 
 Status edit_contact(AddressBook *address_book)
@@ -200,6 +200,17 @@ void displayList(AddressBook *address_book) {
 		}
 		printf("=================================================================================================================\n");
 	}
+}
+
+void displayContact(AddressBook *address_book, int * index) {
+	printf("=================================================================================================================\n");
+	printf("%c %-10s %c %-30s %c %-30s %c %-30s %c\n",':',"S.No",':', "Name", ':', "Phone No", ':', "Email ID",':');
+	printf("=================================================================================================================\n");
+	printf("%c %-10d %c %-30s %c %-30s %c %-30s %c\n",':',address_book->list[*index].si_no,':', address_book->list[*index].name[0], ':', address_book->list[*index].phone_numbers[0], ':', address_book->list[*index].email_addresses[0], ':');
+	for(int j = 1; j < PHONE_NUMBER_COUNT; j++) {
+		printf("%c %-10s %c %-30s %c %-30s %c %-30s %c\n",':',"",':', "", ':', ((strcmp(address_book->list[*index].phone_numbers[*index],"[empty]") == 0) ? "" : address_book->list[*index].phone_numbers[j]), ':', ((strcmp(address_book->list[*index].email_addresses[j],"[empty]") == 0) ? "" : address_book->list[*index].email_addresses[j]),':');
+	}
+	printf("=================================================================================================================\n");
 }
 
 int checkIntChar() {
