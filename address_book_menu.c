@@ -210,24 +210,27 @@ Status delete_contact(AddressBook *address_book)
 				printf("Exiting Delete Contact menu.");
 				return e_back;
 			case 1:
-				get_string("Enter the Name: ", user_input);
-				//matchingPtr = searchName();
+				printf("Enter the Name: ");
+				scanf("%s", user_input);
+				//matchingPtr = searchName(user_input, );
 				break;
 			case 2:
-				get_string("Enter the Phone Number: ", user_input);
-				test = strtok(user_input, '\0');
-				//matchingPtr = searchPhoneNumber();
+				printf("Enter the Phone Number: ");
+				scanf("%s", user_input);
+				//matchingPtr = searchPhoneNumber(user_input, );
 				break;
 			case 3:
-				get_string("Enter the Email Address: ", user_input);
-				//matchingPtr = searchEmail();
+				printf("Enter the Email Address: ");
+				scanf("%s", user_input);
+				//matchingPtr = searchEmail(user_input, );
 				break;
 			case 4:
-				siNum = get_option(NUM, "Enter Serial Number: ");
+				printf("Enter Serial Number: ");
+				scanf("%d", &siNum);
 				//matchingPtr = searchSiNum();
 				break;
-			case 5:
-				break;
+			default:
+				printf("Invalid. Please try again.");
 
 		}
 
@@ -237,7 +240,7 @@ Status delete_contact(AddressBook *address_book)
 			printf("Fail");
 		}
 
-	} while(option != e_no_opt);
+	} while(option != 0);
 	
 	return e_success;
 }
