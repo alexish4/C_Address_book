@@ -175,8 +175,8 @@ Status search(const char *str, AddressBook *address_book, int loop_count, int fi
 }
 
 Status search_contact(AddressBook *address_book)
-{
-
+{	
+	
 }
 
 Status edit_contact(AddressBook *address_book)
