@@ -203,30 +203,30 @@ Status delete_contact(AddressBook *address_book)
 		printf("4. Serial Number\n\n");
 		printf("Please select an option: ");
 
-		option = get_option(NUM, "");
+		option = checkIntChar();
 
 		switch(option){
-			case e_first_opt:
+			case 0:
 				printf("Exiting Delete Contact menu.");
 				return e_back;
-			case e_second_opt:
+			case 1:
 				get_string("Enter the Name: ", user_input);
 				//matchingPtr = searchName();
 				break;
-			case e_third_opt:
+			case 2:
 				get_string("Enter the Phone Number: ", user_input);
 				test = strtok(user_input, '\0');
 				//matchingPtr = searchPhoneNumber();
 				break;
-			case e_fourth_opt:
+			case 3:
 				get_string("Enter the Email Address: ", user_input);
 				//matchingPtr = searchEmail();
 				break;
-			case e_fifth_opt:
+			case 4:
 				siNum = get_option(NUM, "Enter Serial Number: ");
 				//matchingPtr = searchSiNum();
 				break;
-			case e_no_opt:
+			case 5:
 				break;
 
 		}
