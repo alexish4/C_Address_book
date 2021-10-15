@@ -298,27 +298,27 @@ Status edit_contact(AddressBook *address_book)
 		printf("3. Edit by email\n");
 		printf("\n");
 		printf("Please select an option: ");
-		scanf("%d", editInput);
+		scanf("%d", &editInput);
 		
 		if(editInput == 1) //by name
 		{	
 			printf("Current name is %s\n", address_book -> list[rememberIndex].name[0]);
 			printf("Please enter new name: ");
-			scanf("%s", address_book -> list[rememberIndex].name[0]);
+			scanf("%s", &address_book -> list[rememberIndex].name[0]);
 			printf("\n");
 		}
 		else if(editInput == 2)//by phone number
 		{	
 			printf("Current phone number is %s\n", address_book -> list[rememberIndex].phone_numbers[0]);
 			printf("Please enter new phone number: ");
-			scanf("%s", address_book -> list[rememberIndex].phone_numbers[0]);
+			scanf("%s", &address_book -> list[rememberIndex].phone_numbers[0]);
 			printf("\n");
 		}
 		else if(editInput == 3) //by email
 		{	
 			printf("Current email address is %s\n", address_book -> list[rememberIndex].email_addresses[0]);
 			printf("Please enter new email address: ");
-			scanf("%s", address_book -> list[rememberIndex].email_addresses[0]);
+			scanf("%s", &address_book -> list[rememberIndex].email_addresses[0]);
 			printf("\n");
 		}
 	}
