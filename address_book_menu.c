@@ -252,7 +252,7 @@ Status delete_contact(AddressBook *address_book)
 
 		if(deleted != e_success){
 			printf("Fail");
-			deleted = NULL;
+			deleted = e_fail;
 			return e_fail;
 		} else{
 			printf("Success");
