@@ -11,7 +11,6 @@
 //#include "abk.h"
 #include "address_book_menu.h"
 
-int rememberIndex;
 
 int get_option(int type, const char *msg)
 {
@@ -289,7 +288,12 @@ Status edit_contact(AddressBook *address_book)
 	/* Add the functionality for edit contacts here */
 	//Have to find out some way to be able to search the contact first
 	search_contact(address_book);
+	int rememberIndex;
+	printf("Please enter the si number of the contact you would like to edit: ");
+	scanf("%d", &rememberIndex);
+	rememberIndex -= 1; //To be the same value as the index
 	int editInput;
+
 	while(editInput != 0) //looping so that user can keep editing many times using the menu
 	{
 		printf("0. Exit\n");
@@ -299,6 +303,7 @@ Status edit_contact(AddressBook *address_book)
 		printf("\n");
 		printf("Please select an option: ");
 		scanf("%d", &editInput);
+		int allOrSpecificInput;
 		
 		if(editInput == 1) //by name
 		{	
@@ -309,17 +314,83 @@ Status edit_contact(AddressBook *address_book)
 		}
 		else if(editInput == 2)//by phone number
 		{	
-			printf("Current phone number is %s\n", address_book -> list[rememberIndex].phone_numbers[0]);
-			printf("Please enter new phone number: ");
-			scanf("%s", &address_book -> list[rememberIndex].phone_numbers[0]);
+			printf("Would you like to edit all the phone numbers or just a specific one? Enter 1 to edit all, enter");
+			printf(" 2 to edit a specific one: ");
+			scanf("%d", &allOrSpecificInput);
 			printf("\n");
+			if (allOrSpecificInput == 1) //editing all the phone numbers
+			{
+				for(int phoneIndex = 0; phoneIndex < PHONE_NUMBER_COUNT; phoneIndex++)
+				{
+					printf("Current phone number is %s\n", address_book -> list[rememberIndex].phone_numbers[phoneIndex]);
+					printf("Please enter new phone number: ");
+					scanf("%s", &address_book -> list[rememberIndex].phone_numbers[phoneIndex]);
+					printf("\n");
+				}
+			}
+			else //editing a specific phone number entry
+			{
+				char phoneCheck[30];
+				printf("Please enter which specific phone number you would like to change: ");
+				scanf("%s", &phoneCheck);
+				for(int phoneIndex = 0; phoneIndex < PHONE_NUMBER_COUNT; phoneIndex++)
+				{
+					if(strcmp(phoneCheck, address_book -> list[rememberIndex].phone_numbers[phoneIndex]) == 0)
+					{
+						printf("Please enter new phone number: ");
+						scanf("%s", &address_book -> list[rememberIndex].phone_numbers[phoneIndex]);
+						printf("\n");
+						phoneIndex = (PHONE_NUMBER_COUNT - 1); //ending as soon as you change
+					}
+					else if((phoneIndex == (PHONE_NUMBER_COUNT - 1)) && 
+						strcmp(phoneCheck, address_book -> list[rememberIndex].phone_numbers[phoneIndex]) != 0) /*If we didn't find 
+																												the number to change*/
+					{
+						printf("Phone number not found you will be brought back to the main menu.\n");
+					}
+				}
+
+			}
 		}
 		else if(editInput == 3) //by email
 		{	
-			printf("Current email address is %s\n", address_book -> list[rememberIndex].email_addresses[0]);
-			printf("Please enter new email address: ");
-			scanf("%s", &address_book -> list[rememberIndex].email_addresses[0]);
+			printf("Would you like to edit all the email or just a specific one? Enter 1 to edit all, enter");
+			printf(" 2 to edit a specific one: ");
+			scanf("%d", &allOrSpecificInput);
 			printf("\n");
+			if (allOrSpecificInput == 1) //editing all the emails
+			{
+				for(int emailIndex = 0; emailIndex < EMAIL_ID_COUNT; emailIndex++)
+				{
+					printf("Current email is %s\n", address_book -> list[rememberIndex].email_addresses[emailIndex]);
+					printf("Please enter new email: ");
+					scanf("%s", &address_book -> list[rememberIndex].email_addresses[emailIndex]);
+					printf("\n");
+				}
+			}
+			else //editing a specific email entry
+			{
+				char emailCheck[30];
+				printf("Please enter which email you would like to change: ");
+				scanf("%s", &emailCheck);
+				for(int emailIndex = 0; emailIndex < EMAIL_ID_COUNT; emailIndex++)
+				{
+					if(strcmp(emailCheck, address_book -> list[rememberIndex].email_addresses[emailIndex]) == 0)
+					{
+						printf("Please enter new email: ");
+						scanf("%s", &address_book -> list[rememberIndex].email_addresses[emailIndex]);
+						printf("\n");
+						emailIndex = (EMAIL_ID_COUNT - 1); //ending as soon as you edit
+					}
+					else if((emailIndex == (EMAIL_ID_COUNT - 1)) && 
+						strcmp(emailCheck, address_book -> list[rememberIndex].email_addresses[emailIndex]) != 0) /*If we didn't find 
+																												the email to change*/
+					{
+						printf("Email not found you will be brought back to the main menu.\n");
+					}
+				}
+
+			}
 		}
 	}
 	return e_success; //I think this allows the information to be saved
@@ -388,7 +459,6 @@ Status displayByName(AddressBook * address_book, const char * name)
 			if(exist == false) {
 				list_header();
 				list_content(address_book,&i);
-				rememberIndex = i;
 				exist = true;
 			}
 
