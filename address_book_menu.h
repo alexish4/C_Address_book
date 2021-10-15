@@ -22,5 +22,9 @@ Status list_contacts(AddressBook *address_book, const char *title, int *index, c
 void displayList(AddressBook *address_book);
 int checkIntChar();
 bool checkChar();
+Status deleteByName(const char * name, AddressBook * address_book);
+Status deleteByPhone(const char * phone, AddressBook * address_book);
+Status deleteByEmail(const char * email, AddressBook * address_book);
+Status deleteBySerial(int serialNumber, AddressBook * address_book);
 
 #endif

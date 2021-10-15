@@ -190,60 +190,78 @@ Status delete_contact(AddressBook *address_book)
 	int option, siNum;
 	int bookSize = address_book->count*sizeof(ContactInfo);
 	char user_input[32];
-	ContactInfo *matchingPtr = address_book->list;
+	//ContactInfo *matchingPtr = address_book->list;
+	Status deleted = e_no_match;
 	char* test;
 
-	do {
-		printf("#######\tAddress Book\t#######\n");
-		printf("#######\tSearch Contact to Delete by: \n\n");
-		printf("0. Back\n");
-		printf("1. Name\n");
-		printf("2. Phone Number\n");
-		printf("3. Email ID\n");
-		printf("4. Serial Number\n\n");
-		printf("Please select an option: ");
+	printf("#######\tAddress Book\t#######\n");
+	printf("#######\tSearch Contact to Delete by: \n\n");
+	printf("0. Back\n");
+	printf("1. Name\n");
+	printf("2. Phone Number\n");
+	printf("3. Email ID\n");
+	printf("4. Serial Number\n\n");
+	printf("Please select an option: ");
 
-		option = checkIntChar();
+	option = checkIntChar();
 
-		switch(option){
-			case 0:
-				printf("Exiting Delete Contact menu.");
-				return e_back;
-			case 1:
-				printf("Enter the Name: ");
-				scanf("%s", user_input);
-				//matchingPtr = searchName(user_input, );
-				break;
-			case 2:
-				printf("Enter the Phone Number: ");
-				scanf("%s", user_input);
-				//matchingPtr = searchPhoneNumber(user_input, );
-				break;
-			case 3:
-				printf("Enter the Email Address: ");
-				scanf("%s", user_input);
-				//matchingPtr = searchEmail(user_input, );
-				break;
-			case 4:
-				printf("Enter Serial Number: ");
-				scanf("%d", &siNum);
-				//matchingPtr = searchSiNum();
-				break;
-			default:
-				printf("Invalid. Please try again.");
-
+	switch(option){
+		case 0:
+			printf("Exiting Delete Contact menu...");
+			return e_back;
+		case 1:
+			printf("Enter the Name: ");
+			scanf("%s", user_input);
+			if (displayByName(address_book, user_input) == e_success) {
+				deleted = deleteByName(user_input, address_book);
+			} else {
+				deleted = e_no_match;
+			}
+			break;
+		case 2:
+			printf("Enter the Phone Number: ");
+			scanf("%s", user_input);
+			if (displayByPhone(address_book, user_input) == e_success) {
+				deleted = deleteByPhone(user_input, address_book);
+			} else {
+				deleted = e_no_match;
+			}
+			break;
+		case 3:
+			printf("Enter the Email Address: ");
+			scanf("%s", user_input);
+			if (displayByEmail(address_book, user_input) == e_success) {
+				deleted = deleteByEmail(user_input, address_book);
+			} else {
+				deleted = e_no_match;
+			}
+			break;
+		case 4:
+			printf("Enter Serial Number: ");
+			scanf("%d", &siNum);
+			if (displayBySerial(address_book, siNum) == e_success) {
+				deleted = deleteBySerial(siNum, address_book);
+			} else {
+				deleted = e_no_match;
+			}
+			break;
+		default:
+			printf("Invalid input.\n");
+			return e_fail;
 		}
 
-		if(matchingPtr != NULL){
-			printf("Success");
-		} else{
+		if(deleted != e_success){
 			printf("Fail");
+			deleted = NULL;
+			return e_fail;
+		} else{
+			printf("Success");
+			return e_success;
 		}
-
-	} while(option != 0);
-	
 	return e_success;
 }
+
+
 
 void displayList(AddressBook *address_book) {
 	printf("=================================================================================================================\n");
@@ -293,4 +311,24 @@ bool checkChar() {
             return false;
         }
     }
+}
+
+Status deleteByName(const char * name, AddressBook * address_book) {
+	return e_fail;
+	/*implement deletion by name*/
+}
+
+Status deleteByPhone(const char * phone, AddressBook * address_book) {
+	return e_fail;
+	/*implement deletion by phone*/
+}
+
+Status deleteByEmail(const char * email, AddressBook * address_book) {
+	return  e_fail;
+	/*implement deletion by email*/
+}
+
+Status deleteBySerial(int serialNumber, AddressBook * address_book) {
+	return e_fail;
+	/*implement deletion by serialNumber*/
 }
