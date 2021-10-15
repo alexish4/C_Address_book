@@ -303,3 +303,114 @@ bool checkChar() {
         }
     }
 }
+
+Status displayByName(AddressBook * address_book, const char * name) {
+	bool exist = false;
+	for(int i = 0; i < address_book->count; i++) {
+		if(strcmp(name,address_book->list[i].name[0]) == 0) {
+			if(exist == false) {
+				list_header();
+				exist = true;
+			}
+			else {
+				list_content(address_book,&i);
+			}
+		}
+	}
+
+	if(exist == true) {
+		return e_success;
+	}
+	else {
+		printf("No match!\n");
+		return e_fail;
+	}
+}
+
+Status displayByPhone(AddressBook * address_book, const char * phone) {
+	bool exist = false;
+	for(int i = 0; i < address_book->count; i++) {
+		for(int j = 0; j < PHONE_NUMBER_COUNT; j++) {
+			if(strcmp(phone, address_book->list[i].phone_numbers[j]) == 0) {
+				if(exist == false) {
+					list_header();
+					list_content(address_book,&i);
+					exist = true;
+				}
+				else {
+					list_content(address_book,&i);
+				}
+				break;
+			}
+		}
+	}
+
+	if(exist == true) {
+		return e_success;
+	}
+	else {
+		printf("No match!\n");
+		return e_fail;
+	}
+}
+
+Status displayByEmail(AddressBook * address_book, const char * email) {
+	bool exist = false;
+	for(int i = 0; i < address_book->count; i++) {
+		for(int j = 0; j < PHONE_NUMBER_COUNT; j++) {
+			if(strcmp(email, address_book->list[i].email_addresses[j]) == 0) {
+				if(exist == false) {
+					list_header();
+					list_content(address_book,&i);
+					exist = true;
+				}
+				else {
+					list_content(address_book,&i);
+				}
+				break;
+			}
+		}
+	}
+
+	if(exist == true) {
+		return e_success;
+	}
+	else {
+		printf("No match!\n");
+		return e_fail;
+	}
+}
+
+Status displayBySerial(AddressBook * address_book, int serialNumber) {
+	int index = 0;
+	bool exist = false;
+	
+	if(serialNumber > 0 && serialNumber <= address_book->count) {
+		list_header();
+		index = serialNumber - 1;
+		list_content(address_book, &index );
+		exist = true;
+	}
+
+	if(exist == true) {
+		return e_success;
+	}
+	else {
+		printf("No match!\n");
+		return e_fail;
+	}
+}
+
+void list_header() {
+	printf("=================================================================================================================\n");
+	printf("%c %-10s %c %-30s %c %-30s %c %-30s %c\n",':',"S.No",':', "Name", ':', "Phone No", ':', "Email ID",':');
+	printf("=================================================================================================================\n");
+}
+
+void list_content(AddressBook * address_book, int * index) {
+	printf("%c %-10d %c %-30s %c %-30s %c %-30s %c\n",':',address_book->list[*index].si_no,':', address_book->list[*index].name[0], ':', address_book->list[*index].phone_numbers[0], ':', address_book->list[*index].email_addresses[0], ':');
+	for(int j = 1; j < PHONE_NUMBER_COUNT; j++) {
+		printf("%c %-10s %c %-30s %c %-30s %c %-30s %c\n",':',"",':', "", ':', ((strcmp(address_book->list[*index].phone_numbers[j],"[empty]") == 0) ? "" : address_book->list[*index].phone_numbers[j]), ':', ((strcmp(address_book->list[*index].email_addresses[j],"[empty]") == 0) ? "" : address_book->list[*index].email_addresses[j]),':');
+	}
+	printf("=================================================================================================================\n");
+}
