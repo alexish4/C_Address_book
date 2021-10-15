@@ -3,7 +3,7 @@
 
 #include "address_book.h"
 
-Status load_file(AddressBook *address_book);
+Status load_file(AddressBook *address_book, int size);
 Status save_file(AddressBook *address_book);
 
 #endif

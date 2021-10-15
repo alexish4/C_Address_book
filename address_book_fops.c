@@ -8,10 +8,10 @@
 
 #include "address_book.h"
 
-Status load_file(AddressBook *address_book)
+Status load_file(AddressBook *address_book, int size)
 {
 	//Initialization
-	for(int i = 0; i < sizeof(address_book->list)/sizeof(ContactInfo);i++) {
+	for(int i = 0; i < size ;i++) {
 		address_book->list[i].si_no = 0;
 		strcpy(address_book->list[i].name[0],"[empty]");
 		for(int j = 0; j < PHONE_NUMBER_COUNT; j++) {
