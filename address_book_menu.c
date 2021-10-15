@@ -404,6 +404,7 @@ Status displayByName(AddressBook * address_book, const char * name)
 		if(strcmp(name,address_book->list[i].name[0]) == 0) {
 			if(exist == false) {
 				list_header();
+				list_content(address_book,&i);
 				exist = true;
 			}
 			else {
