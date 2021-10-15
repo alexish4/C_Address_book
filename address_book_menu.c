@@ -379,23 +379,81 @@ bool checkChar() {
 }
 
 Status deleteByName(const char * name, AddressBook * address_book) {
-	return e_fail;
-	/*implement deletion by name*/
+	bool deleted = false;
+	for(int i = 0; i < address_book->count; i++) {
+		for(int j = 0; j < NAME_COUNT; j++) {
+			if(strcmp(name, address_book->list[i].name[j]) == 0) {
+				swapDel(address_book, &i);
+				deleted = true;
+				break;
+			}
+		}
+	}
+
+	if(deleted == true) {
+		return e_success;
+	}
+	else {
+		return e_fail;
+	}
 }
 
 Status deleteByPhone(const char * phone, AddressBook * address_book) {
-	return e_fail;
-	/*implement deletion by phone*/
+	bool deleted = false;
+	for(int i = 0; i < address_book->count; i++) {
+		for(int j = 0; j < PHONE_NUMBER_COUNT; j++) {
+			if(strcmp(phone, address_book->list[i].phone_numbers[j]) == 0) {
+				swapDel(address_book, &i);
+				deleted = true;
+				break;
+			}
+		}
+	}
+
+	if(deleted == true) {
+		return e_success;
+	}
+	else {
+		return e_fail;
+	}
 }
 
 Status deleteByEmail(const char * email, AddressBook * address_book) {
-	return  e_fail;
-	/*implement deletion by email*/
+	bool deleted = false;
+	for(int i = 0; i < address_book->count; i++) {
+		for(int j = 0; j < EMAIL_ID_COUNT; j++) {
+			if(strcmp(email, address_book->list[i].email_addresses[j]) == 0) {
+				swapDel(address_book, &i);
+				deleted = true;
+				break;
+			}
+		}
+	}
+
+	if(deleted == true) {
+		return e_success;
+	}
+	else {
+		return e_fail;
+	}
 }
 
 Status deleteBySerial(int serialNumber, AddressBook * address_book) {
-	return e_fail;
-	/*implement deletion by serialNumber*/
+	int i = 0;
+	bool deleted = false;
+	
+	if(serialNumber > 0 && serialNumber <= address_book->count) {
+		i = serialNumber - 1;
+		swapDel(address_book, &i);
+		deleted = true;
+	}
+
+	if(deleted == true) {
+		return e_success;
+	}
+	else {
+		return e_fail;
+	}
 }
 Status displayByName(AddressBook * address_book, const char * name) 
 {
@@ -512,4 +570,28 @@ void list_content(AddressBook * address_book, int * index)
 		printf("%c %-10s %c %-30s %c %-30s %c %-30s %c\n",':',"",':', "", ':', ((strcmp(address_book->list[*index].phone_numbers[j],"[empty]") == 0) ? "" : address_book->list[*index].phone_numbers[j]), ':', ((strcmp(address_book->list[*index].email_addresses[j],"[empty]") == 0) ? "" : address_book->list[*index].email_addresses[j]),':');
 	}
 	printf("=================================================================================================================\n");
+}
+
+void swapDel(AddressBook * address_book, int * index) 
+{
+	int lastIndex = (address_book->count)-1;
+	//address_book->list[*index].si_no = address_book->list[lastIndex].si_no;
+	for (int i = 0; i < NAME_COUNT; i++)
+	{
+		strcpy(address_book->list[*index].name[i], address_book->list[lastIndex].name[i]);
+		strcpy(address_book->list[*index].name[lastIndex], "[empty]");
+	}
+
+	for (int i = 0; i < PHONE_NUMBER_COUNT; i++)
+	{
+		strcpy(address_book->list[*index].phone_numbers[i], address_book->list[lastIndex].phone_numbers[i]);
+		strcpy(address_book->list[*index].phone_numbers[lastIndex], "[empty]");
+	}
+
+	for (int i = 0; i < EMAIL_ID_COUNT; i++)
+	{
+		strcpy(address_book->list[*index].email_addresses[i], address_book->list[lastIndex].email_addresses[i]);
+		strcpy(address_book->list[*index].email_addresses[lastIndex], "[empty]");
+	}
+	address_book->count = address_book->count - 1;
 }

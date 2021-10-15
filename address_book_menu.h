@@ -34,5 +34,6 @@ Status displayByEmail(AddressBook * address_book, const char * email);
 Status displayBySerial(AddressBook * address_book, int serialNumber);
 void list_header();
 void list_content(AddressBook * address_book, int * index);
+void swapDel(AddressBook * address_book, int * index);
 
 #endif
