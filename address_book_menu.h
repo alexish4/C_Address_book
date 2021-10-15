@@ -20,7 +20,19 @@ Status edit_contact(AddressBook *address_book);
 Status delete_contact(AddressBook *address_book);
 Status list_contacts(AddressBook *address_book, const char *title, int *index, const char *msg, Modes mode);
 void displayList(AddressBook *address_book);
+void displayContact(AddressBook *address_book, int * index);
 int checkIntChar();
 bool checkChar();
 
+<<<<<<< HEAD
 #endif
+=======
+Status displayByName(AddressBook * address_book, const char * name);
+Status displayByPhone(AddressBook * address_book, const char * phone);
+Status displayByEmail(AddressBook * address_book, const char * email);
+Status displayBySerial(AddressBook * address_book, int serialNumber);
+void list_header();
+void list_content(AddressBook * address_book, int * index);
+
+#endif
+>>>>>>> 65bee5fa550865e28279c82a8453831df8de58a9
