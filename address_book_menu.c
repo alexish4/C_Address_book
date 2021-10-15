@@ -728,19 +728,19 @@ void swapDel(AddressBook * address_book, int * index)
 	for (int i = 0; i < NAME_COUNT; i++)
 	{
 		strcpy(address_book->list[*index].name[i], address_book->list[lastIndex].name[i]);
-		strcpy(address_book->list[*index].name[lastIndex], "[empty]");
+		strcpy(address_book->list[lastIndex].name[i], "[empty]");
 	}
 
 	for (int i = 0; i < PHONE_NUMBER_COUNT; i++)
 	{
 		strcpy(address_book->list[*index].phone_numbers[i], address_book->list[lastIndex].phone_numbers[i]);
-		strcpy(address_book->list[*index].phone_numbers[lastIndex], "[empty]");
+		strcpy(address_book->list[lastIndex].phone_numbers[i], "[empty]");
 	}
 
 	for (int i = 0; i < EMAIL_ID_COUNT; i++)
 	{
 		strcpy(address_book->list[*index].email_addresses[i], address_book->list[lastIndex].email_addresses[i]);
-		strcpy(address_book->list[*index].email_addresses[lastIndex], "[empty]");
+		strcpy(address_book->list[lastIndex].email_addresses[i], "[empty]");
 	}
 	address_book->count = address_book->count - 1;
 }
