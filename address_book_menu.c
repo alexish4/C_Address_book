@@ -304,13 +304,13 @@ bool checkChar() {
     }
 }
 
-Status displayByName(AddressBook * address_book, const char * name) {
+Status displayByName(AddressBook * address_book, const char * name) 
+{
 	bool exist = false;
 	for(int i = 0; i < address_book->count; i++) {
 		if(strcmp(name,address_book->list[i].name[0]) == 0) {
 			if(exist == false) {
 				list_header();
-				list_content(address_book,&i);
 				exist = true;
 			}
 			else {
@@ -355,7 +355,8 @@ Status displayByPhone(AddressBook * address_book, const char * phone) {
 	}
 }
 
-Status displayByEmail(AddressBook * address_book, const char * email) {
+Status displayByEmail(AddressBook * address_book, const char * email) 
+{
 	bool exist = false;
 	for(int i = 0; i < address_book->count; i++) {
 		for(int j = 0; j < PHONE_NUMBER_COUNT; j++) {
@@ -382,7 +383,8 @@ Status displayByEmail(AddressBook * address_book, const char * email) {
 	}
 }
 
-Status displayBySerial(AddressBook * address_book, int serialNumber) {
+Status displayBySerial(AddressBook * address_book, int serialNumber) 
+{
 	int index = 0;
 	bool exist = false;
 	
@@ -402,13 +404,15 @@ Status displayBySerial(AddressBook * address_book, int serialNumber) {
 	}
 }
 
-void list_header() {
+void list_header() 
+{
 	printf("=================================================================================================================\n");
 	printf("%c %-10s %c %-30s %c %-30s %c %-30s %c\n",':',"S.No",':', "Name", ':', "Phone No", ':', "Email ID",':');
 	printf("=================================================================================================================\n");
 }
 
-void list_content(AddressBook * address_book, int * index) {
+void list_content(AddressBook * address_book, int * index) 
+{
 	printf("%c %-10d %c %-30s %c %-30s %c %-30s %c\n",':',address_book->list[*index].si_no,':', address_book->list[*index].name[0], ':', address_book->list[*index].phone_numbers[0], ':', address_book->list[*index].email_addresses[0], ':');
 	for(int j = 1; j < PHONE_NUMBER_COUNT; j++) {
 		printf("%c %-10s %c %-30s %c %-30s %c %-30s %c\n",':',"",':', "", ':', ((strcmp(address_book->list[*index].phone_numbers[j],"[empty]") == 0) ? "" : address_book->list[*index].phone_numbers[j]), ':', ((strcmp(address_book->list[*index].email_addresses[j],"[empty]") == 0) ? "" : address_book->list[*index].email_addresses[j]),':');
