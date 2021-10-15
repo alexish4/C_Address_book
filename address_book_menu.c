@@ -176,7 +176,61 @@ Status search(const char *str, AddressBook *address_book, int loop_count, int fi
 
 Status search_contact(AddressBook *address_book)
 {
+	/* Add the functionality for search contacts here */
+	//Declaration
+	int option;
+	char strInput[NAME_COUNT];
+	int serialNumber = 0;
 
+	//Print the search menu
+	menu_header("Search Contact by: ");
+	printf("0. Back\n");
+	printf("1. Name\n");
+	printf("2. Phone No\n");
+	printf("3. Email ID\n");
+	printf("4. Serial No\n");
+	printf("Please select an option: ");
+
+	//Get option from user
+	option = checkIntChar();
+
+	//Choose function to run based on the the user selection
+	switch(option) {
+		//If option is 0, go back main menu
+		case e_first_opt: return e_back;
+		//If option is 1, search the name in contact
+		//If the name exists, display all of them
+		//If not, print a warning message
+		case e_second_opt: 
+			printf("Enter the Name: ");
+			scanf("%s",&strInput);
+			return displayByName(address_book,strInput);
+		//If option is 2, search the phone number in contact
+		//if the phone exists, display all of them
+		//If not, print a warning message
+		case e_third_opt:
+			printf("Enter a phone number: ");
+			scanf("%s",&strInput);
+			return displayByPhone(address_book,strInput);
+		//If option is 3, search the email number in contact
+		//if the email exists, display all of them
+		//If not, print a warning message
+		case e_fourth_opt:
+			printf("Enter an email: ");
+			scanf("%s",&strInput);
+			return displayByEmail(address_book,strInput);
+		//If option is 4, search the serial number in contact
+		//if the serial number exists, display it
+		//If not, print a warning message
+		case e_fifth_opt:
+			printf("Enter serial number: ");
+			serialNumber = checkIntChar();
+			return displayBySerial(address_book,serialNumber);
+		//If option is something else, exit the search_contact
+		default: 
+			printf("Invalid input\n");
+			return e_fail;
+	}
 }
 
 Status edit_contact(AddressBook *address_book)
