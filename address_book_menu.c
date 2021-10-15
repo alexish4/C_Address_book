@@ -154,6 +154,7 @@ Status menu(AddressBook *address_book)
 				break;
 				/* Add your implementation to call list_contacts function here */
 			case e_save:
+				printf("The data is saved into %s\n",DEFAULT_FILE);
 				save_file(address_book);
 				break;
 			case e_exit:
@@ -360,7 +361,7 @@ Status displayByEmail(AddressBook * address_book, const char * email)
 {
 	bool exist = false;
 	for(int i = 0; i < address_book->count; i++) {
-		for(int j = 0; j < PHONE_NUMBER_COUNT; j++) {
+		for(int j = 0; j < EMAIL_ID_COUNT; j++) {
 			if(strcmp(email, address_book->list[i].email_addresses[j]) == 0) {
 				if(exist == false) {
 					list_header();
