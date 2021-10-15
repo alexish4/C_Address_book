@@ -138,7 +138,7 @@ Status menu(AddressBook *address_book)
 		switch (option)
 		{
 			case e_add_contact:
-				/* Add your implementation to call add_contacts function here */
+				add_contacts(address_book);
 				break;
 			case e_search_contact:
 				search_contact(address_book);
@@ -167,7 +167,55 @@ Status menu(AddressBook *address_book)
 
 Status add_contacts(AddressBook *address_book)
 {
-	/* Add the functionality for adding contacts here */
+	int selection;
+	int indexOfEmail = 0, indexOfPhone = 0;
+	bool check = true;
+
+	while (check)
+	{
+		printf("\n");
+		printf("Please choose an option:\n");
+		printf("0. Add contact name\n");
+		printf("1. Add phone number to contact\n");
+		printf("2. Add e-mail address to contact\n");
+		printf("3. Go back to the main menu\n");
+
+		selection = checkIntChar();
+
+		if (selection == 0)
+		{
+			printf("What is the contact name:\n");
+			scanf("%s", address_book -> list[address_book->count].name[0]);
+		}
+		else if (selection == 1)
+		{
+			if (indexOfPhone < 5)
+			{
+				printf("What is the phone number:\n");
+				scanf("%s", address_book -> list[address_book->count].phone_numbers[indexOfPhone]);
+				indexOfPhone++;
+			}
+			else 
+				printf("You can not enter more than 5 phone numbers");
+		}
+		else if (selection == 2)
+		{
+			if (indexOfEmail < 5)
+			{
+				printf("What is the e-mail:\n");
+				scanf("%s", address_book -> list[address_book->count].email_addresses[indexOfEmail]);
+				indexOfEmail++;
+			}
+			else 
+				printf("You can not enter more than 5 e-mails");
+		}
+		else if (selection == 3)
+		{
+			address_book->list[address_book->count].si_no = address_book->count + 1;
+			address_book->count++;
+			return e_back;
+		}	
+	}
 }
 
 Status search(const char *str, AddressBook *address_book, int loop_count, int field, const char *msg, Modes mode)
@@ -270,6 +318,7 @@ void displayContact(AddressBook *address_book, int * index) {
 
 int checkIntChar() {
     int number = 0, buffer = 0;
+	
 
     while(true) {
         if((scanf("%d", &number)) != 1) {
