@@ -173,7 +173,7 @@ Status add_contacts(AddressBook *address_book)
 
 	while (check)
 	{
-		printf("\n");
+		menu_header("Add contact menu\n");
 		printf("0. Add contact name\n");
 		printf("1. Add phone number to contact\n");
 		printf("2. Add e-mail address to contact\n");
