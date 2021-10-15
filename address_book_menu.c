@@ -175,8 +175,62 @@ Status search(const char *str, AddressBook *address_book, int loop_count, int fi
 }
 
 Status search_contact(AddressBook *address_book)
-{	
-	
+{
+	/* Add the functionality for search contacts here */
+	//Declaration
+	int option;
+	char strInput[NAME_COUNT];
+	int serialNumber = 0;
+
+	//Print the search menu
+	menu_header("Search Contact by: ");
+	printf("0. Back\n");
+	printf("1. Name\n");
+	printf("2. Phone No\n");
+	printf("3. Email ID\n");
+	printf("4. Serial No\n");
+	printf("Please select an option: ");
+
+	//Get option from user
+	option = checkIntChar();
+
+	//Choose function to run based on the the user selection
+	switch(option) {
+		//If option is 0, go back main menu
+		case e_first_opt: return e_back;
+		//If option is 1, search the name in contact
+		//If the name exists, display all of them
+		//If not, print a warning message
+		case e_second_opt: 
+			printf("Enter the Name: ");
+			scanf("%s",&strInput);
+			return displayByName(address_book,strInput);
+		//If option is 2, search the phone number in contact
+		//if the phone exists, display all of them
+		//If not, print a warning message
+		case e_third_opt:
+			printf("Enter a phone number: ");
+			scanf("%s",&strInput);
+			return displayByPhone(address_book,strInput);
+		//If option is 3, search the email number in contact
+		//if the email exists, display all of them
+		//If not, print a warning message
+		case e_fourth_opt:
+			printf("Enter an email: ");
+			scanf("%s",&strInput);
+			return displayByEmail(address_book,strInput);
+		//If option is 4, search the serial number in contact
+		//if the serial number exists, display it
+		//If not, print a warning message
+		case e_fifth_opt:
+			printf("Enter serial number: ");
+			serialNumber = checkIntChar();
+			return displayBySerial(address_book,serialNumber);
+		//If option is something else, exit the search_contact
+		default: 
+			printf("Invalid input\n");
+			return e_fail;
+	}
 }
 
 Status edit_contact(AddressBook *address_book)
@@ -248,4 +302,115 @@ bool checkChar() {
             return false;
         }
     }
+}
+
+Status displayByName(AddressBook * address_book, const char * name) {
+	bool exist = false;
+	for(int i = 0; i < address_book->count; i++) {
+		if(strcmp(name,address_book->list[i].name[0]) == 0) {
+			if(exist == false) {
+				list_header();
+				exist = true;
+			}
+			else {
+				list_content(address_book,&i);
+			}
+		}
+	}
+
+	if(exist == true) {
+		return e_success;
+	}
+	else {
+		printf("No match!\n");
+		return e_fail;
+	}
+}
+
+Status displayByPhone(AddressBook * address_book, const char * phone) {
+	bool exist = false;
+	for(int i = 0; i < address_book->count; i++) {
+		for(int j = 0; j < PHONE_NUMBER_COUNT; j++) {
+			if(strcmp(phone, address_book->list[i].phone_numbers[j]) == 0) {
+				if(exist == false) {
+					list_header();
+					list_content(address_book,&i);
+					exist = true;
+				}
+				else {
+					list_content(address_book,&i);
+				}
+				break;
+			}
+		}
+	}
+
+	if(exist == true) {
+		return e_success;
+	}
+	else {
+		printf("No match!\n");
+		return e_fail;
+	}
+}
+
+Status displayByEmail(AddressBook * address_book, const char * email) {
+	bool exist = false;
+	for(int i = 0; i < address_book->count; i++) {
+		for(int j = 0; j < PHONE_NUMBER_COUNT; j++) {
+			if(strcmp(email, address_book->list[i].email_addresses[j]) == 0) {
+				if(exist == false) {
+					list_header();
+					list_content(address_book,&i);
+					exist = true;
+				}
+				else {
+					list_content(address_book,&i);
+				}
+				break;
+			}
+		}
+	}
+
+	if(exist == true) {
+		return e_success;
+	}
+	else {
+		printf("No match!\n");
+		return e_fail;
+	}
+}
+
+Status displayBySerial(AddressBook * address_book, int serialNumber) {
+	int index = 0;
+	bool exist = false;
+	
+	if(serialNumber > 0 && serialNumber <= address_book->count) {
+		list_header();
+		index = serialNumber - 1;
+		list_content(address_book, &index );
+		exist = true;
+	}
+
+	if(exist == true) {
+		return e_success;
+	}
+	else {
+		printf("No match!\n");
+		return e_fail;
+	}
+}
+
+void list_header() {
+	printf("=================================================================================================================\n");
+	printf("%c %-10s %c %-30s %c %-30s %c %-30s %c\n",':',"S.No",':', "Name", ':', "Phone No", ':', "Email ID",':');
+	printf("=================================================================================================================\n");
+}
+
+void list_content(AddressBook * address_book, int * index) {
+	printf("%c %-10d %c %-30s %c %-30s %c %-30s %c\n",':',address_book->list[*index].si_no,':', address_book->list[*index].name[0], ':', address_book->list[*index].phone_numbers[0], ':', address_book->list[*index].email_addresses[0], ':');
+	for(int j = 1; j < PHONE_NUMBER_COUNT; j++) {
+		printf("%c %-10s %c %-30s %c %-30s %c %-30s %c\n",':',"",':', "", ':', ((strcmp(address_book->list[*index].phone_numbers[j],"[empty]") == 0) ? "" : address_book->list[*index].phone_numbers[j]), ':', ((strcmp(address_book->list[*index].email_addresses[j],"[empty]") == 0) ? "" : address_book->list[*index].email_addresses[j]),':');
+	}
+	printf("=================================================================================================================\n");
 }
