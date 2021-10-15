@@ -11,6 +11,8 @@
 //#include "abk.h"
 #include "address_book_menu.h"
 
+int rememberIndex;
+
 int get_option(int type, const char *msg)
 {
 	/*
@@ -237,6 +239,7 @@ Status edit_contact(AddressBook *address_book)
 {
 	/* Add the functionality for edit contacts here */
 	//Have to find out some way to be able to search the contact first
+	search_contact(address_book);
 	int editInput;
 	while(editInput != 0) //looping so that user can keep editing many times using the menu
 	{
@@ -250,23 +253,23 @@ Status edit_contact(AddressBook *address_book)
 		
 		if(editInput == 1) //by name
 		{	
-			printf("Current name is %s\n", address_book -> list[address_book -> count].name);
+			printf("Current name is %s\n", address_book -> list[rememberIndex].name[0]);
 			printf("Please enter new name: ");
-			scanf("%s", address_book -> list[address_book -> count].name);
+			scanf("%s", address_book -> list[rememberIndex].name[0]);
 			printf("\n");
 		}
 		else if(editInput == 2)//by phone number
 		{	
-			printf("Current phone number is %s\n", address_book -> list[address_book -> count].phone_numbers);
+			printf("Current phone number is %s\n", address_book -> list[rememberIndex].phone_numbers[0]);
 			printf("Please enter new phone number: ");
-			scanf("%s", address_book -> list[address_book -> count].phone_numbers);
+			scanf("%s", address_book -> list[rememberIndex].phone_numbers[0]);
 			printf("\n");
 		}
 		else if(editInput == 3) //by email
 		{	
-			printf("Current email address is %s\n", address_book -> list[address_book -> count].email_addresses);
+			printf("Current email address is %s\n", address_book -> list[rememberIndex].email_addresses[0]);
 			printf("Please enter new email address: ");
-			scanf("%s", address_book -> list[address_book -> count].email_addresses);
+			scanf("%s", address_book -> list[rememberIndex].email_addresses[0]);
 			printf("\n");
 		}
 	}
@@ -347,6 +350,7 @@ Status displayByName(AddressBook * address_book, const char * name)
 			if(exist == false) {
 				list_header();
 				list_content(address_book,&i);
+				rememberIndex = i;
 				exist = true;
 			}
 			else {
@@ -449,9 +453,12 @@ void list_header()
 
 void list_content(AddressBook * address_book, int * index) 
 {
-	printf("%c %-10d %c %-30s %c %-30s %c %-30s %c\n",':',address_book->list[*index].si_no,':', address_book->list[*index].name[0], ':', address_book->list[*index].phone_numbers[0], ':', address_book->list[*index].email_addresses[0], ':');
+	printf("%c %-10d %c %-30s %c %-30s %c %-30s %c\n",':',address_book->list[*index].si_no,':', address_book->list[*index].name[0], ':', 
+	address_book->list[*index].phone_numbers[0], ':', address_book->list[*index].email_addresses[0], ':');
 	for(int j = 1; j < PHONE_NUMBER_COUNT; j++) {
-		printf("%c %-10s %c %-30s %c %-30s %c %-30s %c\n",':',"",':', "", ':', ((strcmp(address_book->list[*index].phone_numbers[j],"[empty]") == 0) ? "" : address_book->list[*index].phone_numbers[j]), ':', ((strcmp(address_book->list[*index].email_addresses[j],"[empty]") == 0) ? "" : address_book->list[*index].email_addresses[j]),':');
+		printf("%c %-10s %c %-30s %c %-30s %c %-30s %c\n",':',"",':', "", ':', ((strcmp(address_book->list[*index].phone_numbers[j],
+		"[empty]") == 0) ? "" : address_book->list[*index].phone_numbers[j]), ':', ((strcmp(address_book->list[*index].email_addresses[j],
+		"[empty]") == 0) ? "" : address_book->list[*index].email_addresses[j]),':');
 	}
 	printf("=================================================================================================================\n");
 }
