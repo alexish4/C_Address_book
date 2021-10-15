@@ -299,7 +299,7 @@ Status edit_contact(AddressBook *address_book)
 		printf("Please enter the si number of the contact you would like to edit: ");
 		scanf("%d", &rememberIndex);
 		rememberIndex -= 1; //To be the same value as the index
-		int editInput;
+		int editInput = 1; //initializing for while loop to work
 
 		while(editInput != 0) //looping so that user can keep editing many times using the menu
 		{
