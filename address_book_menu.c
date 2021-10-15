@@ -228,7 +228,7 @@ Status search_contact(AddressBook *address_book)
 	/* Add the functionality for search contacts here */
 	//Declaration
 	int option;
-	char strInput[NAME_COUNT];
+	char strInput[NAME_LEN];
 	int serialNumber = 0;
 
 	//Print the search menu
@@ -293,27 +293,15 @@ Status delete_contact(AddressBook *address_book)
 }
 
 void displayList(AddressBook *address_book) {
-	printf("=================================================================================================================\n");
-	printf("%c %-10s %c %-30s %c %-30s %c %-30s %c\n",':',"S.No",':', "Name", ':', "Phone No", ':', "Email ID",':');
-	printf("=================================================================================================================\n");
+	list_header();
 	for(int j = 0; j < address_book->count;j++) {
-		printf("%c %-10d %c %-30s %c %-30s %c %-30s %c\n",':',address_book->list[j].si_no,':', address_book->list[j].name[0], ':', address_book->list[j].phone_numbers[0], ':', address_book->list[j].email_addresses[0], ':');
-		for(int i = 1; i < PHONE_NUMBER_COUNT; i++) {
-			printf("%c %-10s %c %-30s %c %-30s %c %-30s %c\n",':',"",':', "", ':', ((strcmp(address_book->list[j].phone_numbers[i],"[empty]") == 0) ? "" : address_book->list[j].phone_numbers[i]), ':', ((strcmp(address_book->list[j].email_addresses[i],"[empty]") == 0) ? "" : address_book->list[j].email_addresses[i]),':');
-		}
-		printf("=================================================================================================================\n");
+		list_content(address_book, &j);
 	}
 }
 
 void displayContact(AddressBook *address_book, int * index) {
-	printf("=================================================================================================================\n");
-	printf("%c %-10s %c %-30s %c %-30s %c %-30s %c\n",':',"S.No",':', "Name", ':', "Phone No", ':', "Email ID",':');
-	printf("=================================================================================================================\n");
-	printf("%c %-10d %c %-30s %c %-30s %c %-30s %c\n",':',address_book->list[*index].si_no,':', address_book->list[*index].name[0], ':', address_book->list[*index].phone_numbers[0], ':', address_book->list[*index].email_addresses[0], ':');
-	for(int j = 1; j < PHONE_NUMBER_COUNT; j++) {
-		printf("%c %-10s %c %-30s %c %-30s %c %-30s %c\n",':',"",':', "", ':', ((strcmp(address_book->list[*index].phone_numbers[*index],"[empty]") == 0) ? "" : address_book->list[*index].phone_numbers[j]), ':', ((strcmp(address_book->list[*index].email_addresses[j],"[empty]") == 0) ? "" : address_book->list[*index].email_addresses[j]),':');
-	}
-	printf("=================================================================================================================\n");
+	list_header();
+	list_content(address_book, index);
 }
 
 int checkIntChar() {
@@ -361,12 +349,10 @@ Status displayByName(AddressBook * address_book, const char * name)
 		if(strcmp(name,address_book->list[i].name[0]) == 0) {
 			if(exist == false) {
 				list_header();
-				list_content(address_book,&i);
 				exist = true;
 			}
-			else {
-				list_content(address_book,&i);
-			}
+
+			list_content(address_book,&i);
 		}
 	}
 
@@ -385,13 +371,11 @@ Status displayByPhone(AddressBook * address_book, const char * phone) {
 		for(int j = 0; j < PHONE_NUMBER_COUNT; j++) {
 			if(strcmp(phone, address_book->list[i].phone_numbers[j]) == 0) {
 				if(exist == false) {
-					list_header();
-					list_content(address_book,&i);
+					list_header();	
 					exist = true;
 				}
-				else {
-					list_content(address_book,&i);
-				}
+
+				list_content(address_book,&i);
 				break;
 			}
 		}
@@ -413,13 +397,11 @@ Status displayByEmail(AddressBook * address_book, const char * email)
 		for(int j = 0; j < EMAIL_ID_COUNT; j++) {
 			if(strcmp(email, address_book->list[i].email_addresses[j]) == 0) {
 				if(exist == false) {
-					list_header();
-					list_content(address_book,&i);
+					list_header();		
 					exist = true;
 				}
-				else {
-					list_content(address_book,&i);
-				}
+
+				list_content(address_book,&i);
 				break;
 			}
 		}
