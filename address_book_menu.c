@@ -289,10 +289,12 @@ Status edit_contact(AddressBook *address_book)
 {
 	/* Add the functionality for edit contacts here */
 	//Have to find out some way to be able to search the contact first
-	if (search_contact(address_book) == e_back)
-	{
+	Status checkReturn = search_contact(address_book);
+	if(checkReturn == e_back)
 		return e_back;
-	}
+	else if(checkReturn == e_fail)
+		return e_fail;
+	
 	else
 	{
 		int rememberIndex;
@@ -310,7 +312,7 @@ Status edit_contact(AddressBook *address_book)
 			printf("\n");
 			printf("Please select an option: ");
 			scanf("%d", &editInput);
-			int allOrSpecificInput;
+			int allOrSpecificInput = -1; //initialized so no errors
 			
 			if(editInput == 1) //by name
 			{	
@@ -337,7 +339,7 @@ Status edit_contact(AddressBook *address_book)
 				}
 				else //editing a specific phone number entry
 				{
-					char phoneCheck[30];
+					char phoneCheck[30] = "Initialized";
 					printf("Please enter which specific phone number you would like to change: ");
 					scanf("%s", &phoneCheck);
 					for(int phoneIndex = 0; phoneIndex < PHONE_NUMBER_COUNT; phoneIndex++)
@@ -377,7 +379,7 @@ Status edit_contact(AddressBook *address_book)
 				}
 				else //editing a specific email entry
 				{
-					char emailCheck[30];
+					char emailCheck[30] = "Initialized";
 					printf("Please enter which email you would like to change: ");
 					scanf("%s", &emailCheck);
 					for(int emailIndex = 0; emailIndex < EMAIL_ID_COUNT; emailIndex++)
