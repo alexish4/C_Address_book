@@ -174,11 +174,12 @@ Status add_contacts(AddressBook *address_book)
 	while (check)
 	{
 		printf("\n");
-		printf("Please choose an option:\n");
 		printf("0. Add contact name\n");
 		printf("1. Add phone number to contact\n");
 		printf("2. Add e-mail address to contact\n");
 		printf("3. Go back to the main menu\n");
+		printf("\n");
+		printf("Please choose an option: ");
 
 		selection = checkIntChar();
 
@@ -232,12 +233,13 @@ Status search_contact(AddressBook *address_book)
 	int serialNumber = 0;
 
 	//Print the search menu
-	menu_header("Search Contact by: ");
+	menu_header("Search Contact by: \n");
 	printf("0. Back\n");
 	printf("1. Name\n");
 	printf("2. Phone No\n");
 	printf("3. Email ID\n");
 	printf("4. Serial No\n");
+	printf("\n");
 	printf("Please select an option: ");
 
 	//Get option from user
