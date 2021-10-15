@@ -261,7 +261,7 @@ Status delete_contact(AddressBook *address_book)
 
 	switch(option){
 		case 0:
-			printf("Exiting Delete Contact menu...");
+			printf("Exiting Delete Contact menu...\n");
 			return e_back;
 		case 1:
 			printf("Enter the Name: ");
@@ -305,11 +305,11 @@ Status delete_contact(AddressBook *address_book)
 		}
 
 		if(deleted != e_success){
-			printf("Fail");
+			printf("Deletion Failure.\n");
 			deleted = e_fail;
 			return e_fail;
 		} else{
-			printf("Success");
+			printf("Deletion Successful\n");
 			return e_success;
 		}
 	return e_success;
