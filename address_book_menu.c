@@ -446,7 +446,7 @@ void list_header()
 
 void list_content(AddressBook * address_book, int * index) 
 {
-	printf("%c %-10d %c %-30s %c %-30s %c %-30s %c\n",':',address_book->list[*index].si_no,':', address_book->list[*index].name[0], ':', address_book->list[*index].phone_numbers[0], ':', address_book->list[*index].email_addresses[0], ':');
+	printf("%c %-10d %c %-30s %c %-30s %c %-30s %c\n",':',address_book->list[*index].si_no,':', address_book->list[*index].name[0], ':', (strcmp(address_book->list[*index].phone_numbers[0],"[empty]") == 0 ? "" : address_book->list[*index].phone_numbers[0]), ':', strcmp(address_book->list[*index].email_addresses[0],"[empty]") == 0 ? "" : address_book->list[*index].email_addresses[0], ':');
 	for(int j = 1; j < PHONE_NUMBER_COUNT; j++) {
 		printf("%c %-10s %c %-30s %c %-30s %c %-30s %c\n",':',"",':', "", ':', ((strcmp(address_book->list[*index].phone_numbers[j],"[empty]") == 0) ? "" : address_book->list[*index].phone_numbers[j]), ':', ((strcmp(address_book->list[*index].email_addresses[j],"[empty]") == 0) ? "" : address_book->list[*index].email_addresses[j]),':');
 	}
