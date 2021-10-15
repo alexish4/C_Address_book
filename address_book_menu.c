@@ -202,7 +202,7 @@ Status add_contacts(AddressBook *address_book)
 			if (indexOfEmail < 5)
 			{
 				printf("What is the e-mail:\n");
-				scanf("%s", address_book -> list[address_book->count].phone_numbers[indexOfEmail]);
+				scanf("%s", address_book -> list[address_book->count].email_addresses[indexOfEmail]);
 				indexOfEmail++;
 			}
 			else 
@@ -210,12 +210,11 @@ Status add_contacts(AddressBook *address_book)
 		}
 		else if (selection == 3)
 		{
+			address_book->list[address_book->count].si_no = address_book->count + 1;
+			address_book->count++;
 			return e_back;
 		}	
 	}
-	address_book->list[address_book->count].si_no = address_book->count + 1;
-	address_book->count++;
-
 }
 
 Status search(const char *str, AddressBook *address_book, int loop_count, int field, const char *msg, Modes mode)
