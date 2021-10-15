@@ -31,4 +31,6 @@ Status displayBySerial(AddressBook * address_book, int serialNumber);
 void list_header();
 void list_content(AddressBook * address_book, int * index);
 
+void swap(AddressBook * address_book, int * option);
+
 #endif

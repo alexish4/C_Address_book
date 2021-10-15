@@ -409,6 +409,30 @@ Status edit_contact(AddressBook *address_book)
 Status delete_contact(AddressBook *address_book)
 {
 	/* Add the functionality for delete contacts here */
+	//Initialization
+	int option = 0;
+
+	//Search menu
+	Status check = search_contact(address_book);
+	if(check == e_back || check == e_fail)	{
+		return e_back;
+	}
+
+	//Delete menu
+	menu_header("Delete menu\n");
+	printf("Select a serial number (S.No) to delete or 0 to quit: ");
+	option = checkIntChar();
+
+	//Check if user want to quit
+	if(option == 0) {
+		return e_back;
+	}
+
+	//Swap or delete
+	swap(address_book, &option);
+	//Return
+
+	return e_success;
 }
 
 void displayList(AddressBook *address_book) {
@@ -570,4 +594,31 @@ void list_content(AddressBook * address_book, int * index)
 		printf("%c %-10s %c %-30s %c %-30s %c %-30s %c\n",':',"",':', "", ':', ((strcmp(address_book->list[*index].phone_numbers[j],"[empty]") == 0) ? "" : address_book->list[*index].phone_numbers[j]), ':', ((strcmp(address_book->list[*index].email_addresses[j],"[empty]") == 0) ? "" : address_book->list[*index].email_addresses[j]),':');
 	}
 	printf("=================================================================================================================\n");
+}
+
+void swap(AddressBook * address_book, int * option) {
+	//Set si_no of target index to the si_no of the last index
+	address_book->list[*option - 1].si_no = address_book->list[address_book->count - 1].si_no;
+	//Set si_no of the last index to 0
+	address_book->list[address_book->count - 1].si_no = 0;
+
+	//Set name of target index to the name of the last index
+	strcpy(address_book->list[*option - 1].name[0],address_book->list[address_book->count - 1].name[0]);
+	//Set name of the last index to [empty] string
+	strcpy(address_book->list[address_book->count - 1].name[0],"[empty]");
+
+	for(int i = 0; i < PHONE_NUMBER_COUNT; i++) {
+		//Set phone of target index to the phone of the last index
+		strcpy(address_book->list[*option - 1].phone_numbers[i],address_book->list[address_book->count - 1].phone_numbers[i]);
+		//Set phone of the last index to [empty] string
+		strcpy(address_book->list[address_book->count - 1].phone_numbers[i],"[empty]");
+
+		//Set email of target index to the email of the last index
+		strcpy(address_book->list[*option - 1].email_addresses[i],address_book->list[address_book->count - 1].email_addresses[i]);
+		//Set email of the last index to [empty] string
+		strcpy(address_book->list[address_book->count - 1].email_addresses[i],"[empty]");
+	}
+
+	//Decremented the count
+	address_book->count--;
 }
