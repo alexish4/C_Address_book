@@ -412,10 +412,8 @@ Status delete_contact(AddressBook *address_book)
 	char user_input[32];
 	//ContactInfo *matchingPtr = address_book->list;
 	Status deleted = e_no_match;
-	char* test;
 
-	printf("#######\tAddress Book\t#######\n");
-	printf("#######\tSearch Contact to Delete by: \n\n");
+	menu_header("Search Contact to Delete by:\n");
 	printf("0. Back\n");
 	printf("1. Name\n");
 	printf("2. Phone Number\n");
@@ -433,7 +431,10 @@ Status delete_contact(AddressBook *address_book)
 			printf("Enter the Name: ");
 			scanf("%s", user_input);
 			if (displayByName(address_book, user_input) == e_success) {
-				deleted = deleteByName(user_input, address_book);
+				printf("Enter the correct Serial: ");
+				scanf("%d", &siNum);
+				
+				deleted = deleteByName(user_input, address_book, siNum - 1);
 			} else {
 				deleted = e_no_match;
 			}
@@ -442,7 +443,9 @@ Status delete_contact(AddressBook *address_book)
 			printf("Enter the Phone Number: ");
 			scanf("%s", user_input);
 			if (displayByPhone(address_book, user_input) == e_success) {
-				deleted = deleteByPhone(user_input, address_book);
+				printf("Enter the correct Serial: ");
+				scanf("%d", &siNum);
+				deleted = deleteByPhone(user_input, address_book, siNum - 1);
 			} else {
 				deleted = e_no_match;
 			}
@@ -451,7 +454,9 @@ Status delete_contact(AddressBook *address_book)
 			printf("Enter the Email Address: ");
 			scanf("%s", user_input);
 			if (displayByEmail(address_book, user_input) == e_success) {
-				deleted = deleteByEmail(user_input, address_book);
+				printf("Enter the correct Serial: ");
+				scanf("%d", &siNum);
+				deleted = deleteByEmail(user_input, address_book, siNum - 1);
 			} else {
 				deleted = e_no_match;
 			}
@@ -533,15 +538,13 @@ bool checkChar() {
     }
 }
 
-Status deleteByName(const char * name, AddressBook * address_book) {
+Status deleteByName(const char * name, AddressBook * address_book, const int index) {
 	bool deleted = false;
-	for(int i = 0; i < address_book->count; i++) {
-		for(int j = 0; j < NAME_COUNT; j++) {
-			if(strcmp(name, address_book->list[i].name[j]) == 0) {
-				swapDel(address_book, &i);
-				deleted = true;
-				break;
-			}
+	for(int j = 0; j < NAME_COUNT; j++) {
+		if(strcmp(name, address_book->list[index].name[j]) == 0) {
+			swapDel(address_book, index);
+			deleted = true;
+			return e_success;
 		}
 	}
 
@@ -553,15 +556,13 @@ Status deleteByName(const char * name, AddressBook * address_book) {
 	}
 }
 
-Status deleteByPhone(const char * phone, AddressBook * address_book) {
+Status deleteByPhone(const char * phone, AddressBook * address_book, const int index) {
 	bool deleted = false;
-	for(int i = 0; i < address_book->count; i++) {
-		for(int j = 0; j < PHONE_NUMBER_COUNT; j++) {
-			if(strcmp(phone, address_book->list[i].phone_numbers[j]) == 0) {
-				swapDel(address_book, &i);
-				deleted = true;
-				break;
-			}
+	for(int j = 0; j < PHONE_NUMBER_COUNT; j++) {
+		if(strcmp(phone, address_book->list[index].phone_numbers[j]) == 0) {
+			swapDel(address_book, index);
+			deleted = true;
+			return e_success;
 		}
 	}
 
@@ -573,15 +574,13 @@ Status deleteByPhone(const char * phone, AddressBook * address_book) {
 	}
 }
 
-Status deleteByEmail(const char * email, AddressBook * address_book) {
+Status deleteByEmail(const char * email, AddressBook * address_book, const int index) {
 	bool deleted = false;
-	for(int i = 0; i < address_book->count; i++) {
-		for(int j = 0; j < EMAIL_ID_COUNT; j++) {
-			if(strcmp(email, address_book->list[i].email_addresses[j]) == 0) {
-				swapDel(address_book, &i);
-				deleted = true;
-				break;
-			}
+	for(int j = 0; j < EMAIL_ID_COUNT; j++) {
+		if(strcmp(email, address_book->list[index].email_addresses[j]) == 0) {
+			swapDel(address_book, index);
+			deleted = true;
+			return e_success;
 		}
 	}
 
@@ -599,7 +598,7 @@ Status deleteBySerial(int serialNumber, AddressBook * address_book) {
 	
 	if(serialNumber > 0 && serialNumber <= address_book->count) {
 		i = serialNumber - 1;
-		swapDel(address_book, &i);
+		swapDel(address_book, i);
 		deleted = true;
 	}
 
@@ -721,25 +720,25 @@ void list_content(AddressBook * address_book, int * index)
 	printf("=================================================================================================================\n");
 }
 
-void swapDel(AddressBook * address_book, int * index) 
+void swapDel(AddressBook * address_book, const int index) 
 {
 	int lastIndex = (address_book->count)-1;
 	//address_book->list[*index].si_no = address_book->list[lastIndex].si_no;
 	for (int i = 0; i < NAME_COUNT; i++)
 	{
-		strcpy(address_book->list[*index].name[i], address_book->list[lastIndex].name[i]);
+		strcpy(address_book->list[index].name[i], address_book->list[lastIndex].name[i]);
 		strcpy(address_book->list[lastIndex].name[i], "[empty]");
 	}
 
 	for (int i = 0; i < PHONE_NUMBER_COUNT; i++)
 	{
-		strcpy(address_book->list[*index].phone_numbers[i], address_book->list[lastIndex].phone_numbers[i]);
+		strcpy(address_book->list[index].phone_numbers[i], address_book->list[lastIndex].phone_numbers[i]);
 		strcpy(address_book->list[lastIndex].phone_numbers[i], "[empty]");
 	}
 
 	for (int i = 0; i < EMAIL_ID_COUNT; i++)
 	{
-		strcpy(address_book->list[*index].email_addresses[i], address_book->list[lastIndex].email_addresses[i]);
+		strcpy(address_book->list[index].email_addresses[i], address_book->list[lastIndex].email_addresses[i]);
 		strcpy(address_book->list[lastIndex].email_addresses[i], "[empty]");
 	}
 	address_book->count = address_book->count - 1;
